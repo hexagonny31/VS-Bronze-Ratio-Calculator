@@ -66,7 +66,7 @@ Alloy getComposition(const AlloyDefinition &def) {
     int maxIngots = calculateMaxIngots(result.P_1, result.P_2);
     result.ingots = inputVar("How many ingots do you want to make? (1-" + std::to_string(maxIngots) + ")", 1, maxIngots);
     result.reqUnits = result.ingots * unitsPerIngot;  // just for show for now.
-    result.reqBits = result.reqUnits * unitsPerBit;   // same for this.
+    result.reqBits = result.reqUnits / unitsPerBit;   // same for this.
 
     result.B_1 = 0.2 * result.ingots * result.P_1;
     result.B_2 = 0.2 * result.ingots * result.P_2;
