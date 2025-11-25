@@ -1,11 +1,13 @@
 #ifndef CALCULATIONS_H
 #define CALCULATIONS_H
 
-#include "hutils.h"
 #include <string>
+#include <vector>
+#include "alloy_definition.h"
 
 constexpr int unitsPerBit = 5;
 constexpr int unitsPerIngot = 100;
+extern std::vector<AlloyDefinition> alloyTable;
 
 struct Alloy
 {
@@ -15,26 +17,18 @@ struct Alloy
     int reqBits;      // total ore bits needed
 
     // percentages
-    int copperP = 0;  // common ore
-    int tinP = 0;     // tin bronze
-    int zincP = 0;    // bismuth bronze
-    int bismuthP = 0; // bismuth bronze
-    int goldP = 0;    // black bronze
-    int silverP = 0;  // black bronze
+    int P_1 = 0;  // independent
+    int P_2 = 0;  // independent
+    int P_3 = 0;  // dependent
 
     // ore bits
-    int copperB;  // common ore
-    int tinB;     // tin bronze
-    int zincB;    // bismuth bronze
-    int bismuthB; // bismuth bronze
-    int goldB;    // black bronze
-    int silverB;  // black bronze
+    int B_1 = 0;  // same for here.
+    int B_2 = 0;
+    int B_3 = 0;
+
+    void printAlloy(const AlloyDefinition &def);
 };
 
-std::string colorLabel(std::string label, const int color, bool use356 = true);
-
-Alloy getTinBronze();
-Alloy getBismuthBronze();
-Alloy getBlackBronze();
+Alloy getComposition(const AlloyDefinition &def);
 
 #endif

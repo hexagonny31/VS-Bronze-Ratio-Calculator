@@ -21,6 +21,8 @@
 constexpr int SCREEN_WIDTH  = 100;
 constexpr int SCREEN_HEIGHT = 30;
 
+std::string colorLabel(std::string label, const int color, bool use356 = true);
+
 namespace hUtils {
 
     // --- SYSTEM UTILITIES ---
