@@ -5,10 +5,11 @@
 #include <vector>
 #include "alloy_definition.h"
 
-constexpr int unitsPerBit = 5;
+constexpr int unitsPerBit = 5;      // soon to be removed whenever i feel like it.
 constexpr int unitsPerIngot = 100;
-extern std::vector<AlloyDefinition> alloyTable;
+extern std::vector<AlloyDefinition> alloyTable;  // the given variables in a table.
 
+//  the alloy that is influenced by the user's inputs.
 struct Alloy
 {
     std::string name; // e.g. "Bismuth Bronze", "Tin Bronze"
@@ -16,17 +17,11 @@ struct Alloy
     int reqUnits;     // total units needed
     int reqBits;      // total ore bits needed
 
-    // percentages
-    int P_1 = 0;  // independent
-    int P_2 = 0;  // independent
-    int P_3 = 0;  // dependent
+    // a vector of percentages, metal names and ore bits.
+    // the last element is the dependent variable.
+    std::vector<Component> component = std::vector<Component>(3);
 
-    // ore bits
-    int B_1 = 0;  // same for here.
-    int B_2 = 0;
-    int B_3 = 0;
-
-    void printAlloy(const AlloyDefinition &def);
+    void printAlloy();
 };
 
 Alloy getComposition(const AlloyDefinition &def);

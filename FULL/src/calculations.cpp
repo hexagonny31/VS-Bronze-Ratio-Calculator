@@ -5,14 +5,6 @@
 #include <cmath>
 #include <string>
 
-std::string colorLabel(std::string label, const int color, bool use356) {
-    return hUtils::text.fgColor(color, use356) + label + hUtils::text.defaultText();
-}
-
-int calculateBits(int metal, int maxBits) {
-    return static_cast<int>(maxBits * (metal / 100.0));
-}
-
 int calculateMaxIngots(int metal1, int metal2 = 0) {
     int ingots = 0;
     int m1Slots, m2Slots, m3Slots;
@@ -50,27 +42,34 @@ Alloy getComposition(const AlloyDefinition &def) {
     Alloy result;
 
     result.name = def.name;
+    result.component = {
+        {def.component[0].metal},
+        {def.component[1].metal},
+        {def.component[2].metal}
+    };
 
-    result.P_1 = inputVar("How much percentage of " + hUtils::text.toLowerCase(def.metal_name_1)
-                          + " do you want to put? (" + std::to_string(def.metal_range_1_min)
-                          + "-" + std::to_string(def.metal_range_1_max) + ")",
-                          def.metal_range_1_min, def.metal_range_1_max);
-    if(!def.metal_name_2.empty()) {
-        result.P_2 = inputVar("How much percentage of " + hUtils::text.toLowerCase(def.metal_name_2)
-                              + " do you want to put? (" + std::to_string(def.metal_range_2_min)
-                              + "-" + std::to_string(def.metal_range_2_max) + ")",
-                              def.metal_range_2_min, def.metal_range_2_max);
+    for(int i = 0; i < 2; i++) {
+        if(!def.component[i].metal.empty()) {
+            result.component[i].percent = inputVar(
+                "How much percentage of " + hUtils::text.toLowerCase(def.component[i].metal)
+                + " do you want to put? (" + std::to_string(def.component[i].min)
+                + "-" + std::to_string(def.component[i].max) + ")",
+                def.component[i].min, def.component[i].max
+            );
+        }
     }
-    result.P_3 = 100 - result.P_1 - result.P_2;
+    
+    result.component[2].percent = 100 - result.component[0].percent - result.component[1].percent;
 
-    int maxIngots = calculateMaxIngots(result.P_1, result.P_2);
-    result.ingots = inputVar("How many ingots do you want to make? (1-" + std::to_string(maxIngots) + ")", 1, maxIngots);
+    int maxIngots = calculateMaxIngots(result.component[0].percent, result.component[1].percent);
+    result.ingots = inputVar(
+        "How many ingots do you want to make? (1-"
+        + std::to_string(maxIngots) + ")", 1, maxIngots
+    );
+
     result.reqUnits = result.ingots * unitsPerIngot;  // just for show for now.
     result.reqBits = result.reqUnits / unitsPerBit;   // same for this.
-
-    result.B_1 = 0.2 * result.ingots * result.P_1;
-    result.B_2 = 0.2 * result.ingots * result.P_2;
-    result.B_3 = 0.2 * result.ingots * (100 - result.P_1 - result.P_2);
+    for (auto &c : result.component) c.bits = static_cast<int>(0.2 * result.ingots * c.percent);
 
     return result;
 }

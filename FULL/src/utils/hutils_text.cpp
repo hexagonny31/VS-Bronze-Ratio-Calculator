@@ -7,6 +7,10 @@
 using std::cout;
 using std::string;
 
+std::string colorLabel(std::string label, const int color, bool use356) {
+    return hUtils::text.fgColor(color, use356) + label + hUtils::text.defaultText();
+}
+
 namespace hUtils {
 
     Text text;

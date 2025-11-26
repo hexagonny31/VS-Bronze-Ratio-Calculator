@@ -69,8 +69,50 @@ namespace hUtils {
         HUTIL_API void clearBelow        (int line);             //  Clears an assigned line below it.
         HUTIL_API void clearAbove        (int line);             //  Clears an assigned line above it.
     };
+
+    struct Table {
+    private:
+        std::vector<std::string> elements;
     
-    extern Text   text;   
+        std::string stripAnsi(const std::string& text) const
+        {
+            return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
+        }
+
+        template <typename T>
+        std::string toString (const T& value)
+        {
+            std::ostringstream oss;
+            oss << value;
+            return oss.str();
+        }
+        std::string toString(const std::string& value) {
+            return value;
+        }
+        int calculateMaxWidth() const;
+    
+    public:
+        template <typename... Args>
+        HUTIL_API void setElements(Args... args)
+        {
+            elements.clear();
+            (elements.push_back(toString(args)), ...);
+        }
+        template <typename T>
+        HUTIL_API void setElements(const std::vector<T>& vec) {
+            elements.clear();
+            for (const auto& item : vec) {
+                elements.push_back(toString(item));
+            }
+        }
+        
+        HUTIL_API void toColumn   (std::string orientation = "left",
+                                   int givenWidth = 0,
+                                   int numberOfColumns = 2);
+    };
+    
+    extern Text   text;
+    extern Table  table;   
 }
 
 #endif
