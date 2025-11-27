@@ -1,12 +1,10 @@
 #include "calculations.h"
 #include "hutils.h"
-#include "alloy_definition.h"
 
 #include <iostream>
 #include <unordered_map>
 
 void Alloy::printAlloy() {
-
     hUtils::text.clearAll();
     std::cout << "---  Prerequisites (" << name << ") ---\n";
     std::cout << "Units per " << ingots << " ingot/s = " << reqUnits << " units\n";
@@ -23,7 +21,13 @@ void Alloy::printAlloy() {
 }
 
 int main() {
-    Alloy alloy;
+    std::optional<std::vector<AlloyDefinition>> init = parseAlloyTable("alloy_table.json");
+    if(!init) {
+        std::cout << colorLabel("ifstream failed to open .json file.", 31, false);
+        hUtils::sleep(2000);
+        return -1;
+    }
+    std::vector<AlloyDefinition> alloyTable = *init;
 
     std::unordered_map<std::string, int> lookup;
     for (int i = 0; i < alloyTable.size(); i++) {
@@ -33,7 +37,15 @@ int main() {
     }
     
     std::vector<std::string> alloyNames;
-    for(const auto &a : alloyTable) alloyNames.push_back(a.name);
+    for(int i = 0; i < alloyTable.size(); i++) {
+        auto temp = hUtils::text.stripAnsi(alloyTable[i].name);
+            if(temp.empty()) {
+                std::cout << colorLabel("Alloy name is missing at index " + std::to_string(i), 31, false);
+                hUtils::sleep(2000);
+                return -1;
+            }
+        alloyNames.push_back(alloyTable[i].name);
+    }
     
     std::string input;
     while(true) {
@@ -55,7 +67,12 @@ int main() {
         }
 
         int index = it->second;
-        alloy = getComposition(alloyTable[index]);
+        std::optional<Alloy> result = getComposition(alloyTable[index]);
+        if(!result) {
+            hUtils::sleep(2000);
+            return -1;
+        }
+        Alloy alloy = *result;
 
         alloy.printAlloy();
         hUtils::pause(true);

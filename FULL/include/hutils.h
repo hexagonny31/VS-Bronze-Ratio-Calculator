@@ -64,6 +64,10 @@ namespace hUtils {
         HUTIL_API std::string bgColor    (int textColor = 0,
                                           bool use256 = false);
         HUTIL_API std::string defaultText();                     //  Reset text color.
+        HUTIL_API std::string stripAnsi(const std::string& text) const
+        {
+            return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
+        }
 
         HUTIL_API void clearAll          ();                     //  Clears every output in the terminal.
         HUTIL_API void clearBelow        (int line);             //  Clears an assigned line below it.

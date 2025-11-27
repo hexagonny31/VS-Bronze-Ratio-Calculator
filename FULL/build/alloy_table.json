@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Brass",
+        "color": 185,
+        "aliases": [ "brass" ],
+        "components": [
+            { "metal": "Copper", "color": 208, "percent_min": 60, "percent_max": 70 },
+            { "metal": "" },
+            { "metal": "Zinc", "color": 250 }
+        ]
+    },
+    {
+        "name": "Tin Bronze",
+        "color": 227,
+        "aliases": [ "tin bronze", "tin" ],
+        "components": [
+            { "metal": "Copper", "color": 208, "percent_min": 88, "percent_max": 92 },
+            { "metal": "" },
+            { "metal": "Tin", "color": 94 }
+        ]
+    },
+    {
+        "name": "Bismuth Bronze",
+        "color": 136,
+        "aliases": [ "bismuth bronze", "bismuth", "lead-free", "bismuth brass" ],
+        "components": [
+            { "metal": "Zinc", "color": 249, "percent_min": 20, "percent_max": 30 },
+            { "metal": "Bismuth", "color": 144,"percent_min": 10, "percent_max": 20 },
+            { "metal": "Copper", "color": 208 }
+        ]
+    },
+    {
+        "name": "Black Bronze",
+        "color": 90,
+        "aliases": [ "hepatizon", "black bronze", "black", "dark bronze", "dark" ],
+        "components": [
+            { "metal": "Gold", "color": 220, "percent_min": 8, "percent_max": 16 },
+            { "metal": "Silver", "color": 252, "percent_min": 8, "percent_max": 16 },
+            { "metal": "Copper", "color": 208 }
+        ]
+    },
+    {
+        "name": "Molybdochalkos",
+        "color": 242,
+        "aliases": [ "molybdochalkos", "molyb", "leaded copper" ],
+        "components": [
+            { "metal": "Lead", "color": 250, "percent_min": 88, "percent_max": 92 },
+            { "metal": "" },
+            { "metal": "Copper", "color": 208 }
+        ]
+    },
+    {
+        "name": "Lead Solder",
+        "color": 245,
+        "aliases": [ "lead solder", "tin-lead", "leaded soldering", "lead" ],
+        "components": [
+            { "metal": "Lead", "color": 250, "percent_min": 45, "percent_max": 55 },
+            { "metal": "" },
+            { "metal": "Tin", "color": 94 }
+        ]
+    },
+    {
+        "name": "Silver Solder",
+        "color": 251,
+        "aliases": [ "silver solder", "silver blaze", "hard soldering", "silver" ],
+        "components": [
+            { "metal": "Silver", "color": 252, "percent_min": 40, "percent_max": 50 },
+            { "metal": ""},
+            { "metal": "Tin", "color": 94 }
+        ]
+    },
+    {
+        "name": "Cupronickel",
+        "color": 221,
+        "aliases": [ "cupronickel", "cupro", "copper-nickel" ],
+        "components": [
+            { "metal": "Copper", "color": 208, "percent_min": 65, "percent_max": 75 },
+            { "metal": "" },
+            { "metal": "Nickel", "color": 215 }
+        ]
+    },
+    {
+        "name": "Electrum",
+        "color": 154,
+        "aliases": [ "electrum", "elect" ],
+        "components": [
+            { "metal": "Silver", "color": 252, "percent_min": 40, "percent_max": 60 },
+            { "metal": "" },
+            { "metal": "Gold", "color": 220 }
+        ]
+    }
+]
