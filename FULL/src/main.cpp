@@ -11,11 +11,24 @@ void Alloy::printAlloy() {
     std::cout << "Required ore bits = " << reqBits << " ore bits\n\n";
     std::cout << "---  Final Alloy Composition  ---\n";
 
-    for(int i = 0; i <= component.size(); i++) {
-        if(component[i].percent > 0)
-            std::cout << component[i].metal   << " - "
-                      << component[i].bits    << " ore bits ("
-                      << component[i].percent << "%)\n";
+    for(int i = 0; i < component.size(); i++) {
+        if(component[i].percent <= 0) continue;
+
+        const auto stacks = component[i].stacks;
+        std::string metal = component[i].metal;
+        std::cout << metal << " ("
+                  << component[i].percent <<"%) - "
+                  << component[i].bits << " ore bits\n";
+        if(stacks.first != 0){    
+            std::cout << std::string(hUtils::text.stripAnsi(metal).size() + 6, ' ') << " - ";
+            for(int j = 0; j < stacks.first; j++) {
+                std::cout << 128;
+                if(j < stacks.first - 1) std::cout << ", ";
+            }
+            if(stacks.second > 0) std::cout << ", " << stacks.second;
+            std::cout << " ore bits\n";
+        }
+    
     }
     std::cout << '\n';
 }
@@ -47,8 +60,8 @@ int main() {
         alloyNames.push_back(alloyTable[i].name);
     }
     
-    std::string input;
     while(true) {
+        std::string input = "";
         std::cout << "What alloy do you want to calculate? (Enter 'e' to exit)\n";
         hUtils::table.setElements(alloyNames);
         hUtils::table.toColumn("left", 16, 3);
@@ -56,10 +69,10 @@ int main() {
         std::getline(std::cin, input);
         input = hUtils::text.toLowerCase(input);
 
-        if (input == "exit" || input == "e") break;
+        if(input == "exit" || input == "e") break;
 
         auto it = lookup.find(input);
-        if (it == lookup.end()) {
+        if(it == lookup.end()) {
             std::cout << colorLabel("Unknown alloy type.", 31, false);
             hUtils::sleep(2000);
             hUtils::text.clearAbove(5);

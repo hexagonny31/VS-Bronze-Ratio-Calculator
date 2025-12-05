@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 #include <optional>
 
 constexpr int unitsPerBit = 5;      // soon to be removed whenever i feel like it.
@@ -17,6 +18,7 @@ struct Component
     int max     = 0;
     int percent = 0;
     int bits    = 0;
+    std::pair<int, int> stacks;
 };
 
 //  the given values that create the alloy.

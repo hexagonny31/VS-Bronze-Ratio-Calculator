@@ -3,8 +3,6 @@
 #include "json.hpp"
 
 #include <fstream>
-#include <filesystem>
-#include <optional>
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;

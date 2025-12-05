@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <cmath>
-#include <string>
 #include <numeric>
 
 int calculateMaxIngots(std::vector<int>& metals) {
@@ -103,7 +102,10 @@ std::optional<Alloy> getComposition(const AlloyDefinition &def) {
 
     result.reqUnits = result.ingots * unitsPerIngot;  // just for show for now.
     result.reqBits = result.reqUnits / unitsPerBit;   // same for this.
-    for (auto &c : result.component) c.bits = static_cast<int>(0.2 * result.ingots * c.percent);
+    for (auto &c : result.component) {
+        c.bits = static_cast<int>(0.2 * result.ingots * c.percent);
+        c.stacks = {c.bits / 128, c.bits % 128};
+    }
 
     return result;
 }
